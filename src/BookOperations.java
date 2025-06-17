@@ -5,8 +5,8 @@ import java.util.List;
 public class BookOperations {
     String BooksFileName = "Books.txt";
     String[] arrBooks;
-    //List<String> Books = new ArrayList<>();
-
+    static List<Book> listOfBooks = new ArrayList<>();
+    Book[] arrayOfBooksObjects;
 
     public BookOperations() throws IOException {
         try {
@@ -26,7 +26,6 @@ public class BookOperations {
                 lines.add(line);
             }
             this.arrBooks = lines.toArray(new String[0]);
-
             reader.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -55,7 +54,7 @@ public class BookOperations {
         }
         Book book = new Book(this.arrBooks.length + 1, BookTitle, Author, ISBN, true);
         String[] Books = new String[this.arrBooks.length + 1];
-
+        listOfBooks.add(book);
         for (int i = 0; i < Books.length; i++) {
             if (i != Books.length - 1)
                 Books[i] = this.arrBooks[i];
@@ -73,12 +72,13 @@ public class BookOperations {
         if (this.arrBooks.length == 0)
             returnedReply = "No Books.";
         else {
-            for (String s : this.arrBooks) {
-                String[] splittedBook = s.split(",");
+            for (int i = 0; i < this.arrBooks.length;i++) {
+                String[] splittedBook = this.arrBooks[i].split(",");
                 if (splittedBook[1].equalsIgnoreCase(BookTitle) && splittedBook[2].equalsIgnoreCase(Author) && splittedBook[3].equalsIgnoreCase(ISBN)) {
+                    listOfBooks.remove(i);
                     isRemoved = true;
                 } else {
-                    returnedBooks.add(s);
+                    returnedBooks.add(this.arrBooks[i]);
                     returnedReply = "The Book Doesn't exist!";
                 }
 
@@ -89,5 +89,9 @@ public class BookOperations {
             return "Book is Removed Successfully!";
         else
             return returnedReply;
+    }
+
+    public String editBook(){
+        return "";
     }
 }
