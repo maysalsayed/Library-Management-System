@@ -64,7 +64,7 @@ public class BookOperations {
         writeData(Books);
         return "Book Added Successfully!";
     }
-    /*public String removeBook(String BookTitle, String Author,String ISBN){
+    public String removeBook(String BookTitle, String Author,String ISBN){
         for(String s:this.arrBooks){
             if(this.arrBooks.length==1 && this.arrBooks[0] == null)
                 return "No Books.";
@@ -76,5 +76,5 @@ public class BookOperations {
                 else {return "";}
             }
         }
-    }*/
+    }
 }

@@ -48,15 +48,10 @@ public class Main{
         int userAnswer = scanner.nextInt();
         scanner.nextLine();
         BookOperations bookOperations = new BookOperations();
+        String [] retuned;
         if (userAnswer == 1){
-            System.out.println("Enter Book Title: ");
-            String BookTitle = scanner.nextLine();
-            System.out.println("Enter Author Name: ");
-            String AuthorName = scanner.nextLine();
-            System.out.println("Enter ISBN: ");
-            String ISBN = scanner.nextLine();
-            System.out.println(bookOperations.addBook(BookTitle,AuthorName,ISBN));
-
+            retuned = getBookInfo();
+            System.out.println(bookOperations.addBook(retuned[0],retuned[1],retuned[2]));
         }
         else if(userAnswer == 2){
 
@@ -74,5 +69,15 @@ public class Main{
 
         }
 
+    }
+    public static String [] getBookInfo(){
+        System.out.println("Enter Book Title: ");
+        String BookTitle = scanner.nextLine();
+        System.out.println("Enter Author Name: ");
+        String AuthorName = scanner.nextLine();
+        System.out.println("Enter ISBN: ");
+        String ISBN = scanner.nextLine();
+        String [] returned = {BookTitle,AuthorName,ISBN};
+        return returned;
     }
 }
