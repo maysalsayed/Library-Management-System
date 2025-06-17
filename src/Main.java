@@ -16,6 +16,7 @@ public class Main{
         while (true) {
             System.out.println("""
         === Library Management System ===
+        Choose the number of the choice:
         1. Manage Books
         2. Manage Members
         3. Borrow/Return Books
@@ -38,6 +39,7 @@ public class Main{
     public static void ManageBooks() throws IOException {
         System.out.println("""
         --- Book Management ---
+        Choose the number of the choice:
         1. Add a book
         2. Remove a book
         3. Update a book
@@ -58,7 +60,19 @@ public class Main{
             System.out.println(bookOperations.removeBook(returned[0],returned[1],returned[2]));
         }
         else if (userAnswer == 3){
-
+            returned = getBookInfo();
+            System.out.println("""
+            What to modify?
+            Choose the number of the choice:
+            1.Book Title
+            2.Book Author
+            3.Book ISBN
+            """);
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Enter the new info needed to modify: ");
+            String bookInfoToChange = scanner.nextLine();
+            System.out.println(bookOperations.editBook(returned[0],returned[1],returned[2],choice,bookInfoToChange));
         }
         else if (userAnswer == 4){
 
