@@ -92,30 +92,34 @@ public class BookOperations {
 
     public String editBook(String BookTitle, String Author, String ISBN, int modificationCriteria, String BookInfo) throws IOException {
         Book[] arrayOfBooksObjects = listOfBooks.toArray(new Book[0]);
-
-        for(int i = 0 ; i < arrayOfBooksObjects.length;i++){
-            if(arrayOfBooksObjects[i].getBookTitle().equalsIgnoreCase(BookTitle) && arrayOfBooksObjects[i].getAuthor().equalsIgnoreCase(Author) && arrayOfBooksObjects[i].getISBN().equalsIgnoreCase(ISBN)){
-                if(modificationCriteria == 1){
-                    arrayOfBooksObjects[i].setBookTitle(BookInfo);
-                    String [] splitted = this.arrBooks[i].split(",");
-                    this.arrBooks[i] = splitted[0]+","+BookInfo+","+splitted[2]+","+splitted[3]+","+splitted[4];
-                }
-                else if(modificationCriteria == 2){
-                    arrayOfBooksObjects[i].setAuthor(BookInfo);
-                    String [] splitted = this.arrBooks[i].split(",");
-                    this.arrBooks[i] = splitted[0]+","+splitted[1]+","+BookInfo+","+splitted[3]+","+splitted[4];
-                }
-                else if(modificationCriteria == 3){
-                    arrayOfBooksObjects[i].setISBN(BookInfo);
-                    String [] splitted = this.arrBooks[i].split(",");
-                    this.arrBooks[i] = splitted[0]+","+splitted[1]+","+splitted[2]+","+BookInfo+","+splitted[4];
-                }
-                else{
-                    return "You can only 1,2,or 3";
+        if (arrayOfBooksObjects.length == 0) {
+            return "No Books.";
+        } else{
+            for (int i = 0; i < arrayOfBooksObjects.length; i++) {
+                if (i == arrayOfBooksObjects.length - 1) {
+                    if (!arrayOfBooksObjects[i].getBookTitle().equalsIgnoreCase(BookTitle) && !arrayOfBooksObjects[i].getAuthor().equalsIgnoreCase(Author) && !arrayOfBooksObjects[i].getISBN().equalsIgnoreCase(ISBN)) {
+                        return "The Book doesn't exist.";
+                    }
+                } else if (arrayOfBooksObjects[i].getBookTitle().equalsIgnoreCase(BookTitle) && arrayOfBooksObjects[i].getAuthor().equalsIgnoreCase(Author) && arrayOfBooksObjects[i].getISBN().equalsIgnoreCase(ISBN)) {
+                    if (modificationCriteria == 1) {
+                        arrayOfBooksObjects[i].setBookTitle(BookInfo);
+                        String[] splitted = this.arrBooks[i].split(",");
+                        this.arrBooks[i] = splitted[0] + "," + BookInfo + "," + splitted[2] + "," + splitted[3] + "," + splitted[4];
+                    } else if (modificationCriteria == 2) {
+                        arrayOfBooksObjects[i].setAuthor(BookInfo);
+                        String[] splitted = this.arrBooks[i].split(",");
+                        this.arrBooks[i] = splitted[0] + "," + splitted[1] + "," + BookInfo + "," + splitted[3] + "," + splitted[4];
+                    } else if (modificationCriteria == 3) {
+                        arrayOfBooksObjects[i].setISBN(BookInfo);
+                        String[] splitted = this.arrBooks[i].split(",");
+                        this.arrBooks[i] = splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + BookInfo + "," + splitted[4];
+                    } else {
+                        return "You can only 1,2,or 3";
+                    }
                 }
             }
-        }
+    }
         this.writeData(this.arrBooks);
-        return "";
+        return "The Book's info is Edited Successfully!";
     }
 }
