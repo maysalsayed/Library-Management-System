@@ -47,7 +47,7 @@ public class BookOperations {
                 break;
             else {
                 String[] splittedBook = s.split(",");
-                if (splittedBook[1].equals(BookTitle) && splittedBook[2].equals(Author) && splittedBook[3].equals(ISBN)) {
+                if (splittedBook[1].equalsIgnoreCase(BookTitle) && splittedBook[2].equalsIgnoreCase(Author) && splittedBook[3].equalsIgnoreCase(ISBN)) {
                     return "The Book already exists";
                 }
             }
@@ -74,7 +74,7 @@ public class BookOperations {
             }
             else {
                 String[] splittedBook = s.split(",");
-                if (splittedBook[1].equals(BookTitle) && splittedBook[2].equals(Author) && splittedBook[3].equals(ISBN)) {
+                if (splittedBook[1].equalsIgnoreCase(BookTitle) && splittedBook[2].equalsIgnoreCase(Author) && splittedBook[3].equalsIgnoreCase(ISBN)) {
                     isRemoved = true;
                 }
                 else {
