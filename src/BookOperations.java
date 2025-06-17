@@ -64,17 +64,29 @@ public class BookOperations {
         writeData(Books);
         return "Book Added Successfully!";
     }
-    public String removeBook(String BookTitle, String Author,String ISBN){
+    public String removeBook(String BookTitle, String Author,String ISBN) throws IOException {
+        List<String> returnedBooks = new ArrayList<>();
+        String returnedReply = "";
+        boolean isRemoved = false;
         for(String s:this.arrBooks){
-            if(this.arrBooks.length==1 && this.arrBooks[0] == null)
-                return "No Books.";
+            if(this.arrBooks.length==1 && this.arrBooks[0] == null) {
+                returnedReply = "No Books.";
+            }
             else {
                 String[] splittedBook = s.split(",");
                 if (splittedBook[1].equals(BookTitle) && splittedBook[2].equals(Author) && splittedBook[3].equals(ISBN)) {
-                    return "";
+                    isRemoved = true;
                 }
-                else {return "";}
+                else {
+                    returnedBooks.add(s);
+                    returnedReply = "The Book Doesn't exist!";
+                }
             }
         }
+        this.writeData(returnedBooks.toArray(returnedBooks.toArray(new String[0])));
+        if(isRemoved)
+            return "Book is Removed Successfully!";
+        else
+            return returnedReply;
     }
 }

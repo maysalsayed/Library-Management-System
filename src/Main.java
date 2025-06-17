@@ -48,13 +48,14 @@ public class Main{
         int userAnswer = scanner.nextInt();
         scanner.nextLine();
         BookOperations bookOperations = new BookOperations();
-        String [] retuned;
+        String [] returned;
         if (userAnswer == 1){
-            retuned = getBookInfo();
-            System.out.println(bookOperations.addBook(retuned[0],retuned[1],retuned[2]));
+            returned = getBookInfo();
+            System.out.println(bookOperations.addBook(returned[0], returned[1], returned[2]));
         }
         else if(userAnswer == 2){
-
+            returned = getBookInfo();
+            System.out.println(bookOperations.removeBook(returned[0],returned[1],returned[2]));
         }
         else if (userAnswer == 3){
 
