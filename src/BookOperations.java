@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BookOperations {
     String BooksFileName = "Books.txt";
-    String [] arrBooks;
+    String[] arrBooks;
     //List<String> Books = new ArrayList<>();
 
 
@@ -28,22 +28,23 @@ public class BookOperations {
             this.arrBooks = lines.toArray(new String[0]);
 
             reader.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    public void writeData(String [] arr) throws IOException {
+
+    public void writeData(String[] arr) throws IOException {
         FileWriter file = new FileWriter(BooksFileName);
         BufferedWriter writer = new BufferedWriter(file);
-        for (String s:arr){
-            writer.write(s+"\n");
+        for (String s : arr) {
+            writer.write(s + "\n");
         }
         writer.close();
     }
-    public String addBook(String BookTitle, String Author,String ISBN) throws IOException {
-        for(String s:this.arrBooks){
-            if(this.arrBooks.length==1 && this.arrBooks[0] == null)
+
+    public String addBook(String BookTitle, String Author, String ISBN) throws IOException {
+        for (String s : this.arrBooks) {
+            if (this.arrBooks.length == 1 && this.arrBooks[0] == null)
                 break;
             else {
                 String[] splittedBook = s.split(",");
@@ -52,39 +53,39 @@ public class BookOperations {
                 }
             }
         }
-        Book book = new Book(this.arrBooks.length+1,BookTitle,Author,ISBN,true);
-        String [] Books = new String[this.arrBooks.length+1];
+        Book book = new Book(this.arrBooks.length + 1, BookTitle, Author, ISBN, true);
+        String[] Books = new String[this.arrBooks.length + 1];
 
-        for (int i = 0;i < Books.length;i++){
-            if(i != Books.length - 1)
+        for (int i = 0; i < Books.length; i++) {
+            if (i != Books.length - 1)
                 Books[i] = this.arrBooks[i];
             else
-                Books[i] = book.getBookID()+","+book.getBookTitle()+","+book.getAuthor()+","+book.getISBN()+","+book.getBookAvailability();
+                Books[i] = book.getBookID() + "," + book.getBookTitle() + "," + book.getAuthor() + "," + book.getISBN() + "," + book.getBookAvailability();
         }
         writeData(Books);
         return "Book Added Successfully!";
     }
-    public String removeBook(String BookTitle, String Author,String ISBN) throws IOException {
+
+    public String removeBook(String BookTitle, String Author, String ISBN) throws IOException {
         List<String> returnedBooks = new ArrayList<>();
         String returnedReply = "";
         boolean isRemoved = false;
-        for(String s:this.arrBooks){
-            if(this.arrBooks.length==1 && this.arrBooks[0] == null) {
-                returnedReply = "No Books.";
-            }
-            else {
+        if (this.arrBooks.length == 0)
+            returnedReply = "No Books.";
+        else {
+            for (String s : this.arrBooks) {
                 String[] splittedBook = s.split(",");
                 if (splittedBook[1].equalsIgnoreCase(BookTitle) && splittedBook[2].equalsIgnoreCase(Author) && splittedBook[3].equalsIgnoreCase(ISBN)) {
                     isRemoved = true;
-                }
-                else {
+                } else {
                     returnedBooks.add(s);
                     returnedReply = "The Book Doesn't exist!";
                 }
+
             }
+            this.writeData(returnedBooks.toArray(returnedBooks.toArray(new String[0])));
         }
-        this.writeData(returnedBooks.toArray(returnedBooks.toArray(new String[0])));
-        if(isRemoved)
+        if (isRemoved)
             return "Book is Removed Successfully!";
         else
             return returnedReply;
