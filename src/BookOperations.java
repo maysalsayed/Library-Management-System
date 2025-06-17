@@ -41,8 +41,7 @@ public class BookOperations {
             else {
                 String[] splittedBook = s.split(",");
                 if (splittedBook[1].equals(BookTitle) && splittedBook[2].equals(Author) && splittedBook[3].equals(ISBN)) {
-                    String returned = "The Book already exists";
-                    return returned;
+                    return "The Book already exists";
                 }
             }
         }
