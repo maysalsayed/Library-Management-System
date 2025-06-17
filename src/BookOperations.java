@@ -52,16 +52,8 @@ public class BookOperations {
                 }
             }
         }
-        Book book;
-        String [] Books;
-        if(this.arrBooks.length == 1){
-            book = new Book(this.arrBooks.length,BookTitle,Author,ISBN,true);
-            Books = new String[this.arrBooks.length];
-        }
-        else {
-            book = new Book(this.arrBooks.length+1,BookTitle,Author,ISBN,true);
-            Books = new String[this.arrBooks.length+1];
-        }
+        Book book = new Book(this.arrBooks.length+1,BookTitle,Author,ISBN,true);
+        String [] Books = new String[this.arrBooks.length+1];
 
         for (int i = 0;i < Books.length;i++){
             if(i != Books.length - 1)
@@ -72,7 +64,17 @@ public class BookOperations {
         writeData(Books);
         return "Book Added Successfully!";
     }
-    public void removeBook(String BookTitle, String Author,String ISBN){
-
-    }
+    /*public String removeBook(String BookTitle, String Author,String ISBN){
+        for(String s:this.arrBooks){
+            if(this.arrBooks.length==1 && this.arrBooks[0] == null)
+                return "No Books.";
+            else {
+                String[] splittedBook = s.split(",");
+                if (splittedBook[1].equals(BookTitle) && splittedBook[2].equals(Author) && splittedBook[3].equals(ISBN)) {
+                    return "";
+                }
+                else {return "";}
+            }
+        }
+    }*/
 }
