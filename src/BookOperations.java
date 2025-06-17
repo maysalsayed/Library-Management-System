@@ -3,71 +3,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookOperations {
-    private static String BooksFileName = "Books.txt";
-    private static String [] arrBooks = new String[1];
+    String BooksFileName = "Books.txt";
+    String [] arrBooks;
     //List<String> Books = new ArrayList<>();
-    private static BookOperations instance;
-    private static FileWriter file;
-    private static FileReader readerr;
-    private static BufferedReader reader;
-    static {
-        try {
-            instance = new BookOperations();
-            file = new FileWriter(BooksFileName);
-            readerr = new FileReader(BooksFileName);
-            reader = new BufferedReader(readerr);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     public BookOperations() throws IOException {
         try {
-            String read = reader.readLine();
-            if(read == null) {
-                read = "";
-                arrBooks = new String[1];
+            FileReader readerr = new FileReader(BooksFileName);
+            BufferedReader reader = new BufferedReader(readerr);
+
+            List<String> lines = new ArrayList<>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
             }
-            else {
-                String regex = "\n";
-                this.arrBooks = read.split(regex);
-            }
+            this.arrBooks = lines.toArray(new String[0]);
+
+            reader.close();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
-    public static void writeData(String [] arr) throws IOException {
+    public void writeData(String [] arr) throws IOException {
+        FileWriter file = new FileWriter(BooksFileName);
         BufferedWriter writer = new BufferedWriter(file);
         for (String s:arr){
             writer.write(s+"\n");
         }
         writer.close();
     }
-    public static String addBook(String BookTitle, String Author,String ISBN) throws IOException {
-        for(String s:arrBooks){
-            if(arrBooks.length==1 && arrBooks[0] == null)
+    public String addBook(String BookTitle, String Author,String ISBN) throws IOException {
+        for(String s:this.arrBooks){
+            if(this.arrBooks.length==1 && this.arrBooks[0] == null)
                 break;
             else {
                 String[] splittedBook = s.split(",");
-                if (splittedBook[1].equals(BookTitle) && splittedBook[2].equals(Author) && splittedBook.equals(ISBN))
-                    return "The Book already exists";
+                if (splittedBook[1].equals(BookTitle) && splittedBook[2].equals(Author) && splittedBook[3].equals(ISBN)) {
+                    String returned = "The Book already exists";
+                    return returned;
+                }
             }
         }
         Book book;
         String [] Books;
-        if(arrBooks.length == 1){
-            book = new Book(arrBooks.length,BookTitle,Author,ISBN,true);
-            Books = new String[arrBooks.length];
+        if(this.arrBooks.length == 1){
+            book = new Book(this.arrBooks.length,BookTitle,Author,ISBN,true);
+            Books = new String[this.arrBooks.length];
         }
         else {
-            book = new Book(arrBooks.length+1,BookTitle,Author,ISBN,true);
-            Books = new String[arrBooks.length+1];
+            book = new Book(this.arrBooks.length+1,BookTitle,Author,ISBN,true);
+            Books = new String[this.arrBooks.length+1];
         }
 
         for (int i = 0;i < Books.length;i++){
             if(i != Books.length - 1)
-                Books[i] = arrBooks[i];
+                Books[i] = this.arrBooks[i];
             else
                 Books[i] = book.getBookID()+","+book.getBookTitle()+","+book.getAuthor()+","+book.getISBN()+","+book.getBookAvailability();
         }
