@@ -10,6 +10,13 @@ public class BookOperations {
 
     public BookOperations() throws IOException {
         try {
+            File file = new File(BooksFileName);
+
+            if (!file.exists()) {
+                // Create the file (empty)
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                writer.close(); // Just create and close
+            }
             FileReader readerr = new FileReader(BooksFileName);
             BufferedReader reader = new BufferedReader(readerr);
 
