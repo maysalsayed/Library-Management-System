@@ -94,22 +94,22 @@ public class Main{
 
     }
     public static String [] getBookInfo(){
-        String regex = "\\b(?:ISBN(?:-13)?:?\\s*)?(97[89])[- ]?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,7}[- ]?\\d\\b\n";
+        String regex = "^97[89]\\d{10}";
         Pattern pattern = Pattern.compile(regex);
         String [] returned = new String[3];
         System.out.println("Enter Book Title: ");
         String BookTitle = scanner.nextLine();
-        returned[1] = BookTitle;
-        System.out.println("Enter Author Name (): ");
+        returned[0] = BookTitle;
+        System.out.println("Enter Author Name: ");
         String AuthorName = scanner.nextLine();
-        returned[2] = AuthorName;
+        returned[1] = AuthorName;
         while (true) {
             System.out.println("Enter ISBN: ");
             String ISBN = scanner.nextLine();
             Matcher matcher = pattern.matcher(ISBN.trim());
             boolean isMatch = matcher.matches();
             if (isMatch) {
-                returned[3] = ISBN;
+                returned[2] = ISBN;
                 break;
             }
         }
@@ -170,14 +170,14 @@ public class Main{
         Pattern pattern = Pattern.compile(regex);
         String [] returned = new String[3];
         System.out.println("Enter Member Name: ");
-        String memberName = scanner.nextLine();
+        returned[0]= scanner.nextLine();
         while (true) {
             System.out.println("Enter valid Member Email: ");
             String memberEmail = scanner.nextLine();
             Matcher matcher = pattern.matcher(memberEmail.trim());
             boolean isMatch = matcher.matches();
             if (isMatch) {
-                returned[2] = memberEmail;
+                returned[1] = memberEmail;
                 break;
             }
         }
@@ -189,7 +189,7 @@ public class Main{
             Matcher matcher = pattern.matcher(memberPhone.trim());
             boolean isMatch = matcher.matches();
             if (isMatch) {
-                returned[3] = memberPhone;
+                returned[2] = memberPhone;
                 break;
             }
         }
