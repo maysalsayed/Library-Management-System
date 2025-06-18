@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main{
     static Scanner scanner = new Scanner(System.in);
@@ -92,13 +94,25 @@ public class Main{
 
     }
     public static String [] getBookInfo(){
+        String regex = "\\b(?:ISBN(?:-13)?:?\\s*)?(97[89])[- ]?\\d{1,5}[- ]?\\d{1,7}[- ]?\\d{1,7}[- ]?\\d\\b\n";
+        Pattern pattern = Pattern.compile(regex);
+        String [] returned = new String[3];
         System.out.println("Enter Book Title: ");
         String BookTitle = scanner.nextLine();
-        System.out.println("Enter Author Name: ");
+        returned[1] = BookTitle;
+        System.out.println("Enter Author Name (): ");
         String AuthorName = scanner.nextLine();
-        System.out.println("Enter ISBN: ");
-        String ISBN = scanner.nextLine();
-        String [] returned = {BookTitle,AuthorName,ISBN};
+        returned[2] = AuthorName;
+        while (true) {
+            System.out.println("Enter ISBN: ");
+            String ISBN = scanner.nextLine();
+            Matcher matcher = pattern.matcher(ISBN.trim());
+            boolean isMatch = matcher.matches();
+            if (isMatch) {
+                returned[3] = ISBN;
+                break;
+            }
+        }
         return returned;
     }
 
