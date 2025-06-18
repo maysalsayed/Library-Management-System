@@ -90,4 +90,63 @@ public class Member {
         this.writeData(Members);
         return "Book Added Successfully!";
     }
+
+    public String removeMember(String MemberName, String MemberEmail, String MemberPhone) throws IOException {
+        List<String> returnedMembers = new ArrayList<>();
+        String returnedReply = "";
+        boolean isRemoved = false;
+        if (this.arrMembers.length == 0)
+            returnedReply = "No Members.";
+        else {
+            for (int i = 0; i < this.arrMembers.length;i++) {
+                String[] splittedMember = this.arrMembers[i].split(",");
+                if (splittedMember[1].equalsIgnoreCase(MemberName) && splittedMember[2].equalsIgnoreCase(MemberEmail) && splittedMember[3].equalsIgnoreCase(MemberPhone)) {
+                    isRemoved = true;
+                } else {
+                    returnedMembers.add(this.arrMembers[i]);
+                    returnedReply = "The Member doesn't exist!";
+                }
+
+            }
+            this.writeData(returnedMembers.toArray(new String[0]));
+        }
+        if (isRemoved)
+            return "Member is Removed Successfully!";
+        else
+            return returnedReply;
+    }
+
+    public String editMember(String MemberName, String MemberEmail, String MemberPhone, int modificationCriteria, String MemberInfo) throws IOException {
+        if (this.arrMembers.length == 0) {
+            return "No Members.";
+        } else{
+            for (int i = 0; i < this.arrMembers.length; i++) {
+                String [] splitted = this.arrMembers[i].split(",");
+                if (i == this.arrMembers.length - 1) {
+                    if (!splitted[2].equalsIgnoreCase(MemberName) && !splitted[3].equalsIgnoreCase(MemberEmail) && !splitted[4].equalsIgnoreCase(MemberPhone)) {
+                        return "The Member doesn't exist.";
+                    }
+                } else if (splitted[2].equalsIgnoreCase(MemberName) && splitted[3].equalsIgnoreCase(MemberEmail) && splitted[4].equalsIgnoreCase(MemberPhone)) {
+                    if (modificationCriteria == 1) {
+                        this.arrMembers[i] = splitted[0] + "," + MemberInfo + "," + splitted[2] + "," + splitted[3] + "," + splitted[4];
+                    } else if (modificationCriteria == 2) {
+                        this.arrMembers[i] = splitted[0] + "," + splitted[1] + "," + MemberInfo + "," + splitted[3] + "," + splitted[4];
+                    } else if (modificationCriteria == 3) {
+                        this.arrMembers[i] = splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + MemberInfo + "," + splitted[4];
+                    } else {
+                        return "You can only 1,2,or 3";
+                    }
+                }
+            }
+        }
+        this.writeData(this.arrMembers);
+        return "The Book's info is Edited Successfully!";
+    }
+
+    public void listMembers(){
+        System.out.println("Here's the list of all Members: ");
+        for (String s:this.arrMembers){
+            System.out.println(s);
+        }
+    }
 }

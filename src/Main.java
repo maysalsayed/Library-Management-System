@@ -116,25 +116,25 @@ public class Main{
         }
         else if(userAnswer == 2){
             returned = getMemberInfo();
-            System.out.println(memberOperations.removeBook(returned[0],returned[1],returned[2]));
+            System.out.println(memberOperations.removeMember(returned[0],returned[1],returned[2]));
         }
         else if (userAnswer == 3){
-            returned = getBookInfo();
+            returned = getMemberInfo();
             System.out.println("""
             What to modify?
             Choose the number of the choice:
-            1.Book Title
-            2.Book Author
-            3.Book ISBN
+            1.Member Name
+            2.Member Email
+            3.Member Phone
             """);
             int choice = scanner.nextInt();
             scanner.nextLine();
             System.out.println("Enter the new info needed to modify: ");
             String bookInfoToChange = scanner.nextLine();
-            System.out.println(bookOperations.editBook(returned[0],returned[1],returned[2],choice,bookInfoToChange));
+            System.out.println(memberOperations.editMember(returned[0],returned[1],returned[2],choice,bookInfoToChange));
         }
         else if (userAnswer == 4){
-            bookOperations.listBooks();
+            memberOperations.listMembers();
         }
         else if (userAnswer == 5){
 
