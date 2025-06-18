@@ -166,13 +166,33 @@ public class Main{
     }
 
     public static String [] getMemberInfo(){
+        String regex = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b\n";
+        Pattern pattern = Pattern.compile(regex);
+        String [] returned = new String[3];
         System.out.println("Enter Member Name: ");
         String memberName = scanner.nextLine();
-        System.out.println("Enter Member Email: ");
-        String memberEmail = scanner.nextLine();
-        System.out.println("Enter Member Phone: ");
-        String memberPhone = scanner.nextLine();
-        String [] returned = {memberName, memberEmail, memberPhone};
+        while (true) {
+            System.out.println("Enter valid Member Email: ");
+            String memberEmail = scanner.nextLine();
+            Matcher matcher = pattern.matcher(memberEmail.trim());
+            boolean isMatch = matcher.matches();
+            if (isMatch) {
+                returned[2] = memberEmail;
+                break;
+            }
+        }
+        regex = "\\b07[789]\\d{7}\\b\n";
+        pattern = Pattern.compile(regex);
+        while (true) {
+            System.out.println("Enter Member Phone: ");
+            String memberPhone = scanner.nextLine();
+            Matcher matcher = pattern.matcher(memberPhone.trim());
+            boolean isMatch = matcher.matches();
+            if (isMatch) {
+                returned[3] = memberPhone;
+                break;
+            }
+        }
         return returned;
     }
 }
