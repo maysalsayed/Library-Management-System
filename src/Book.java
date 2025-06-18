@@ -2,12 +2,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookOperations {
+public class Book {
     String BooksFileName = "Books.txt";
     String[] arrBooks;
     static List<Book> listOfBooks = new ArrayList<>();
+    private int BookID;
+    private String BookTitle;
+    private String Author;
+    private String ISBN;
+    private boolean isAvailable;
 
-    public BookOperations() throws IOException {
+    public Book() throws IOException {
         try {
             File file = new File(BooksFileName);
 
@@ -31,6 +36,36 @@ public class BookOperations {
         }
     }
 
+    public int getBookID(){
+        return BookID;
+    }
+    public void setBookID(int BookID){
+        this.BookID = BookID;
+    }
+    public String getBookTitle(){
+        return BookTitle;
+    }
+    public void setBookTitle(String BookTitle){
+        this.BookTitle = BookTitle;
+    }
+    public String getAuthor(){
+        return Author;
+    }
+    public void setAuthor(String Author){
+        this.Author = Author;
+    }
+    public String getISBN(){
+        return ISBN;
+    }
+    public void setISBN(String ISBN){
+        this.ISBN = ISBN;
+    }
+    public boolean getBookAvailability(){
+        return isAvailable;
+    }
+    public void setBookAvailability(boolean isAvailable){
+        this.isAvailable = isAvailable;
+    }
     public void writeData(String[] arr) throws IOException {
         FileWriter file = new FileWriter(BooksFileName);
         BufferedWriter writer = new BufferedWriter(file);
@@ -51,14 +86,14 @@ public class BookOperations {
                 }
             }
         }
-        Book book = new Book(this.arrBooks.length + 1, BookTitle, Author, ISBN, true);
+        //Book book = new Book(this.arrBooks.length + 1, BookTitle, Author, ISBN, true);
         String[] Books = new String[this.arrBooks.length + 1];
-        listOfBooks.add(book);
+        //listOfBooks.add(book);
         for (int i = 0; i < Books.length; i++) {
             if (i != Books.length - 1)
                 Books[i] = this.arrBooks[i];
             else
-                Books[i] = book.getBookID() + "," + book.getBookTitle() + "," + book.getAuthor() + "," + book.getISBN() + "," + book.getBookAvailability();
+                Books[i] = Books.length+1 + "," + BookTitle + "," + Author + "," + ISBN + "," + true;
         }
         this.writeData(Books);
         return "Book Added Successfully!";
@@ -74,7 +109,7 @@ public class BookOperations {
             for (int i = 0; i < this.arrBooks.length;i++) {
                 String[] splittedBook = this.arrBooks[i].split(",");
                 if (splittedBook[1].equalsIgnoreCase(BookTitle) && splittedBook[2].equalsIgnoreCase(Author) && splittedBook[3].equalsIgnoreCase(ISBN)) {
-                    listOfBooks.remove(i);
+                    //listOfBooks.remove(i);
                     isRemoved = true;
                 } else {
                     returnedBooks.add(this.arrBooks[i]);
@@ -82,7 +117,7 @@ public class BookOperations {
                 }
 
             }
-            this.writeData(returnedBooks.toArray(returnedBooks.toArray(new String[0])));
+            this.writeData(returnedBooks.toArray(new String[0]));
         }
         if (isRemoved)
             return "Book is Removed Successfully!";
@@ -91,27 +126,21 @@ public class BookOperations {
     }
 
     public String editBook(String BookTitle, String Author, String ISBN, int modificationCriteria, String BookInfo) throws IOException {
-        Book[] arrayOfBooksObjects = listOfBooks.toArray(new Book[0]);
-        if (arrayOfBooksObjects.length == 0) {
+        if (this.arrBooks.length == 0) {
             return "No Books.";
         } else{
-            for (int i = 0; i < arrayOfBooksObjects.length; i++) {
-                if (i == arrayOfBooksObjects.length - 1) {
-                    if (!arrayOfBooksObjects[i].getBookTitle().equalsIgnoreCase(BookTitle) && !arrayOfBooksObjects[i].getAuthor().equalsIgnoreCase(Author) && !arrayOfBooksObjects[i].getISBN().equalsIgnoreCase(ISBN)) {
+            for (int i = 0; i < this.arrBooks.length; i++) {
+                String [] splitted = this.arrBooks[i].split(",");
+                if (i == this.arrBooks.length - 1) {
+                    if (!splitted[2].equalsIgnoreCase(BookTitle) && !splitted[3].equalsIgnoreCase(Author) && !splitted[4].equalsIgnoreCase(ISBN)) {
                         return "The Book doesn't exist.";
                     }
-                } else if (arrayOfBooksObjects[i].getBookTitle().equalsIgnoreCase(BookTitle) && arrayOfBooksObjects[i].getAuthor().equalsIgnoreCase(Author) && arrayOfBooksObjects[i].getISBN().equalsIgnoreCase(ISBN)) {
+                } else if (splitted[2].equalsIgnoreCase(BookTitle) && splitted[3].equalsIgnoreCase(Author) && splitted[4].equalsIgnoreCase(ISBN)) {
                     if (modificationCriteria == 1) {
-                        arrayOfBooksObjects[i].setBookTitle(BookInfo);
-                        String[] splitted = this.arrBooks[i].split(",");
                         this.arrBooks[i] = splitted[0] + "," + BookInfo + "," + splitted[2] + "," + splitted[3] + "," + splitted[4];
                     } else if (modificationCriteria == 2) {
-                        arrayOfBooksObjects[i].setAuthor(BookInfo);
-                        String[] splitted = this.arrBooks[i].split(",");
                         this.arrBooks[i] = splitted[0] + "," + splitted[1] + "," + BookInfo + "," + splitted[3] + "," + splitted[4];
                     } else if (modificationCriteria == 3) {
-                        arrayOfBooksObjects[i].setISBN(BookInfo);
-                        String[] splitted = this.arrBooks[i].split(",");
                         this.arrBooks[i] = splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + BookInfo + "," + splitted[4];
                     } else {
                         return "You can only 1,2,or 3";
@@ -121,5 +150,12 @@ public class BookOperations {
     }
         this.writeData(this.arrBooks);
         return "The Book's info is Edited Successfully!";
+    }
+
+    public void listBooks(){
+        System.out.println("Here's the list of all Books: ");
+        for (String s:this.arrBooks){
+            System.out.println(s);
+        }
     }
 }

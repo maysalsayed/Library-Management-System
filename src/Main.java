@@ -43,13 +43,13 @@ public class Main{
         1. Add a book
         2. Remove a book
         3. Update a book
-        4. Search books
-        5. List all books
+        4. List all books
+        5. Search books
         6. Back to Main Menu
         """);
         int userAnswer = scanner.nextInt();
         scanner.nextLine();
-        BookOperations bookOperations = new BookOperations();
+        Book bookOperations = new Book();
         String [] returned;
         if (userAnswer == 1){
             returned = getBookInfo();
@@ -75,7 +75,7 @@ public class Main{
             System.out.println(bookOperations.editBook(returned[0],returned[1],returned[2],choice,bookInfoToChange));
         }
         else if (userAnswer == 4){
-
+            bookOperations.listBooks();
         }
         else if (userAnswer == 5){
 
