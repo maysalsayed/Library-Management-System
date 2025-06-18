@@ -126,16 +126,14 @@ public class Book {
     }
 
     public String editBook(String BookTitle, String Author, String ISBN, int modificationCriteria, String BookInfo) throws IOException {
+        boolean match = false;
         if (this.arrBooks.length == 0) {
             return "No Books.";
         } else{
             for (int i = 0; i < this.arrBooks.length; i++) {
                 String [] splitted = this.arrBooks[i].split(",");
-                if (i == this.arrBooks.length - 1) {
-                    if (!(splitted[2].equalsIgnoreCase(BookTitle)) && !(splitted[3].equalsIgnoreCase(Author)) && !(splitted[4].equalsIgnoreCase(ISBN))) {
-                        return "The Book doesn't exist.";
-                    }
-                } else if (splitted[2].equalsIgnoreCase(BookTitle) && splitted[3].equalsIgnoreCase(Author) && splitted[4].equalsIgnoreCase(ISBN)) {
+                if (splitted[1].equalsIgnoreCase(BookTitle) && splitted[2].equalsIgnoreCase(Author) && splitted[3].equalsIgnoreCase(ISBN)) {
+                    match = true;
                     if (modificationCriteria == 1) {
                         this.arrBooks[i] = splitted[0] + "," + BookInfo + "," + splitted[2] + "," + splitted[3] + "," + splitted[4];
                     } else if (modificationCriteria == 2) {
@@ -148,6 +146,9 @@ public class Book {
                 }
             }
     }
+        if (!match){
+            return "The Book doesn't exist!";
+        }
         this.writeData(this.arrBooks);
         return "The Book's info is Edited Successfully!";
     }

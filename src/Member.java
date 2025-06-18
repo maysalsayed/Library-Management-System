@@ -117,27 +117,28 @@ public class Member {
     }
 
     public String editMember(String MemberName, String MemberEmail, String MemberPhone, int modificationCriteria, String MemberInfo) throws IOException {
+        boolean match = false;
         if (this.arrMembers.length == 0) {
             return "No Members.";
         } else{
             for (int i = 0; i < this.arrMembers.length; i++) {
                 String [] splitted = this.arrMembers[i].split(",");
-                if (i == this.arrMembers.length - 1) {
-                    if (!splitted[2].equalsIgnoreCase(MemberName) && !splitted[3].equalsIgnoreCase(MemberEmail) && !splitted[4].equalsIgnoreCase(MemberPhone)) {
-                        return "The Member doesn't exist.";
-                    }
-                } else if (splitted[2].equalsIgnoreCase(MemberName) && splitted[3].equalsIgnoreCase(MemberEmail) && splitted[4].equalsIgnoreCase(MemberPhone)) {
+                 if (splitted[1].equalsIgnoreCase(MemberName) && splitted[2].equalsIgnoreCase(MemberEmail) && splitted[3].equalsIgnoreCase(MemberPhone)) {
+                     match = true;
                     if (modificationCriteria == 1) {
-                        this.arrMembers[i] = splitted[0] + "," + MemberInfo + "," + splitted[2] + "," + splitted[3] + "," + splitted[4];
+                        this.arrMembers[i] = splitted[0] + "," + MemberInfo + "," + splitted[2] + "," + splitted[3];
                     } else if (modificationCriteria == 2) {
-                        this.arrMembers[i] = splitted[0] + "," + splitted[1] + "," + MemberInfo + "," + splitted[3] + "," + splitted[4];
+                        this.arrMembers[i] = splitted[0] + "," + splitted[1] + "," + MemberInfo + "," + splitted[3];
                     } else if (modificationCriteria == 3) {
-                        this.arrMembers[i] = splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + MemberInfo + "," + splitted[4];
+                        this.arrMembers[i] = splitted[0] + "," + splitted[1] + "," + splitted[2] + "," + MemberInfo;
                     } else {
                         return "You can only 1,2,or 3";
                     }
                 }
             }
+        }
+        if (!match){
+            return "The Member doesn't exist";
         }
         this.writeData(this.arrMembers);
         return "The Members's info is Edited Successfully!";
