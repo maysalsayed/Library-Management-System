@@ -27,11 +27,14 @@ public class Main{
             if (userAnswer == 1) {
                 ManageBooks();
             } else if (userAnswer == 2) {
-
+                ManageMembers();
             } else if (userAnswer == 3) {
 
             } else if (userAnswer == 4) {
                 break;
+            }
+            else {
+                System.out.println("Please enter a valid number.");
             }
         }
     }
@@ -83,6 +86,9 @@ public class Main{
         else if (userAnswer == 6){
 
         }
+        else {
+            System.out.println("Please enter a valid number.");
+        }
 
     }
     public static String [] getBookInfo(){
@@ -98,7 +104,7 @@ public class Main{
 
     public static void ManageMembers() throws IOException{
         System.out.println("""
-        --- Book Management ---
+        --- Member Management ---
         Choose the number of the choice:
         1. Add a Member
         2. Remove a Member
@@ -138,6 +144,9 @@ public class Main{
         }
         else if (userAnswer == 5){
 
+        }
+        else {
+            System.out.println("Please enter a valid number.");
         }
 
     }

@@ -132,7 +132,7 @@ public class Book {
             for (int i = 0; i < this.arrBooks.length; i++) {
                 String [] splitted = this.arrBooks[i].split(",");
                 if (i == this.arrBooks.length - 1) {
-                    if (!splitted[2].equalsIgnoreCase(BookTitle) && !splitted[3].equalsIgnoreCase(Author) && !splitted[4].equalsIgnoreCase(ISBN)) {
+                    if (!(splitted[2].equalsIgnoreCase(BookTitle)) && !(splitted[3].equalsIgnoreCase(Author)) && !(splitted[4].equalsIgnoreCase(ISBN))) {
                         return "The Book doesn't exist.";
                     }
                 } else if (splitted[2].equalsIgnoreCase(BookTitle) && splitted[3].equalsIgnoreCase(Author) && splitted[4].equalsIgnoreCase(ISBN)) {

@@ -88,7 +88,7 @@ public class Member {
                 Members[i] = Members.length+1 + "," + MemberName + "," + MemberEmail + "," + MemberPhone;
         }
         this.writeData(Members);
-        return "Book Added Successfully!";
+        return "Member Added Successfully!";
     }
 
     public String removeMember(String MemberName, String MemberEmail, String MemberPhone) throws IOException {
@@ -140,7 +140,7 @@ public class Member {
             }
         }
         this.writeData(this.arrMembers);
-        return "The Book's info is Edited Successfully!";
+        return "The Members's info is Edited Successfully!";
     }
 
     public void listMembers(){
