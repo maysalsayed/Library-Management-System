@@ -211,12 +211,24 @@ public class Main{
         Book bookOperations = new Book();
         String [] returnedMembers = memberOperations.arrMembers;
         String [] returnedBooks = bookOperations.arrBooks;
+        String [] returnedTrans;
         if (userAnswer == 1){
             System.out.println("Enter Member ID: ");
             int memberID= scanner.nextInt();
             System.out.println("Enter Book ID: ");
             int bookID = scanner.nextInt();
-            transOperations.borrowingBook(returnedMembers,returnedBooks,memberID,bookID);
+            if (bookOperations.arrBooks.length == 0){
+                System.out.println("No Books exist.");
+            }
+            else {
+                returnedTrans = transOperations.borrowingBook(returnedMembers, returnedBooks, memberID, bookID);
+                if(returnedTrans.length == 1){
+                    System.out.println(returnedTrans[0]);
+                }
+                else {
+                    bookOperations.writeData(returnedTrans);
+                }
+            }
         }
         else if(userAnswer == 2){
 
