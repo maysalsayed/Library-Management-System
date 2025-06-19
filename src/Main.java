@@ -157,7 +157,7 @@ public class Main{
             memberOperations.listMembers();
         }
         else if (userAnswer == 5){
-
+            //return to main menu
         }
         else {
             System.out.println("Please enter a valid number.");
@@ -195,4 +195,32 @@ public class Main{
         }
         return returned;
     }
+
+    public static void manageTransaction() throws IOException {
+        System.out.println("""
+        ---  Borrow/Return  ---
+        Choose the number of the choice:
+        1. Borrow a Book
+        2. Return a Book
+        3. Back to Main Menu
+        """);
+        int userAnswer = scanner.nextInt();
+        scanner.nextLine();
+        Transaction transOperations = new Transaction();
+        Member memberOperations = new Member();
+        Book bookOperations = new Book();
+        String [] returnedMembers = memberOperations.arrMembers;
+        String [] returnedBooks = bookOperations.arrBooks;
+        if (userAnswer == 1){
+            System.out.println("Enter Member ID: ");
+            int memberID= scanner.nextInt();
+            System.out.println("Enter Book ID: ");
+            int bookID = scanner.nextInt();
+            transOperations.borrowingBook(returnedMembers,returnedBooks,memberID,bookID);
+        }
+        else if(userAnswer == 2){
+
+        }
+    }
+
 }
