@@ -85,7 +85,7 @@ public class Member {
             if (i != Members.length - 1)
                 Members[i] = this.arrMembers[i];
             else
-                Members[i] = this.arrMembers[this.arrMembers.length -1].split(",")[0]+1 + "," + MemberName + "," + MemberEmail + "," + MemberPhone;
+                Members[i] = Integer.parseInt(this.arrMembers[this.arrMembers.length -1].split(",")[0])+1 + "," + MemberName + "," + MemberEmail + "," + MemberPhone;
         }
         this.writeData(Members);
         return "Member Added Successfully!";

@@ -55,7 +55,7 @@ public class Transaction {
                         if (j != Transactions.length - 1)
                             Transactions[j] = this.arrTrans[j];
                         else
-                            Transactions[j] = this.arrTrans[this.arrTrans.length -1].split(",")[0]+1 + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
+                            Transactions[j] = Integer.parseInt(this.arrTrans[this.arrTrans.length -1].split(",")[0])+1 + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
                     }
                     this.writeData(Transactions);
                     return booksArray;

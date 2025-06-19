@@ -93,7 +93,7 @@ public class Book {
             if (i != Books.length - 1)
                 Books[i] = this.arrBooks[i];
             else
-                Books[i] = this.arrBooks[this.arrBooks.length -1].split(",")[0]+1 + "," + BookTitle + "," + Author + "," + ISBN + "," + true;
+                Books[i] = Integer.parseInt(this.arrBooks[this.arrBooks.length -1].split(",")[0])+1 + "," + BookTitle + "," + Author + "," + ISBN + "," + true;
         }
         this.writeData(Books);
         return "Book Added Successfully!";
