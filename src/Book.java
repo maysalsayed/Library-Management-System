@@ -77,7 +77,7 @@ public class Book {
 
     public String addBook(String BookTitle, String Author, String ISBN) throws IOException {
         for (String s : this.arrBooks) {
-            if (this.arrBooks.length == 1 && this.arrBooks[0] == null)
+            if (this.arrBooks.length == 1 && this.arrBooks[0].equalsIgnoreCase(""))
                 break;
             else {
                 String[] splittedBook = s.split(",");
@@ -92,8 +92,13 @@ public class Book {
         for (int i = 0; i < Books.length; i++) {
             if (i != Books.length - 1)
                 Books[i] = this.arrBooks[i];
-            else
-                Books[i] = Integer.parseInt(this.arrBooks[this.arrBooks.length -1].split(",")[0])+1 + "," + BookTitle + "," + Author + "," + ISBN + "," + true;
+            else {
+                if (Books.length == 1)
+                    Books[i] = "1" + "," + BookTitle + "," + Author + "," + ISBN + "," + true;
+                else
+                    Books[i] = Integer.parseInt(this.arrBooks[this.arrBooks.length - 1].split(",")[0]) + 1 + "," + BookTitle + "," + Author + "," + ISBN + "," + true;
+
+            }
         }
         this.writeData(Books);
         return "Book Added Successfully!";

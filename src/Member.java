@@ -70,7 +70,7 @@ public class Member {
 
     public String addMember(String MemberName, String MemberEmail, String MemberPhone) throws IOException {
         for (String s : this.arrMembers) {
-            if (this.arrMembers.length == 1 && this.arrMembers[0] == null)
+            if (this.arrMembers.length == 1 && this.arrMembers[0].equalsIgnoreCase(""))
                 break;
             else {
                 String[] splittedMember = s.split(",");
@@ -84,8 +84,12 @@ public class Member {
         for (int i = 0; i < Members.length; i++) {
             if (i != Members.length - 1)
                 Members[i] = this.arrMembers[i];
-            else
-                Members[i] = Integer.parseInt(this.arrMembers[this.arrMembers.length -1].split(",")[0])+1 + "," + MemberName + "," + MemberEmail + "," + MemberPhone;
+            else {
+                if(Members.length == 1)
+                    Members[i] = "1" + "," + MemberName + "," + MemberEmail + "," + MemberPhone;
+                else
+                    Members[i] = Integer.parseInt(this.arrMembers[this.arrMembers.length - 1].split(",")[0]) + 1 + "," + MemberName + "," + MemberEmail + "," + MemberPhone;
+            }
         }
         this.writeData(Members);
         return "Member Added Successfully!";
