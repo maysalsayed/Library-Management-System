@@ -31,7 +31,7 @@ public class Main{
             } else if (userAnswer == 2) {
                 ManageMembers();
             } else if (userAnswer == 3) {
-
+                manageTransaction();
             } else if (userAnswer == 4) {
                 break;
             }
@@ -231,6 +231,9 @@ public class Main{
             }
         }
         else if(userAnswer == 2){
+
+        } else if (userAnswer == 3) {
+            //return to main menu
 
         }
     }

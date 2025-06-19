@@ -8,7 +8,7 @@ public class Member {
     private String MemberName;
     private String MemberEmail;
     private String MemberPhone;
-    String MembersFileName = "Membes.txt";
+    String MembersFileName = "Members.txt";
     String [] arrMembers;
     public Member() throws IOException {
         try {

@@ -54,8 +54,13 @@ public class Transaction {
                     for (int j = 0;j < Transactions.length;j++){
                         if (j != Transactions.length - 1)
                             Transactions[j] = this.arrTrans[j];
-                        else
-                            Transactions[j] = Integer.parseInt(this.arrTrans[this.arrTrans.length -1].split(",")[0])+1 + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
+                        else{
+                            if(Transactions.length == 1)
+                                Transactions[j] = "1" + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
+                            else
+                                Transactions[j] = Integer.parseInt(this.arrTrans[this.arrTrans.length -1].split(",")[0])+1 + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
+                        }
+
                     }
                     this.writeData(Transactions);
                     return booksArray;
