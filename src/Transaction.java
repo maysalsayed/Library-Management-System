@@ -49,8 +49,10 @@ public class Transaction {
         String [] Transactions = new String[this.arrTrans.length+1];
         for (int i = 0; i < booksArray.length; i++) {
             if (Integer.parseInt(booksArray[i].split(",")[0]) == bookID) {
-                if (Boolean.parseBoolean(booksArray[i].split(",")[4])) {
-                    booksArray[i].split(",")[4] = "false";
+                String[] bookParts = booksArray[i].split(",");
+                if (Boolean.parseBoolean(bookParts[4])) {
+                    bookParts[4] = "false"; // Update availability
+                    booksArray[i] = String.join(",", bookParts);
                     for (int j = 0;j < Transactions.length;j++){
                         if (j != Transactions.length - 1)
                             Transactions[j] = this.arrTrans[j];
@@ -75,17 +77,19 @@ public class Transaction {
         return returned;
     }
 
-    public String [] returningBook(String [] booksArray,int choice, int ID) throws IOException {
+    public String [] returningBook(String [] booksArray,String [] transArray,int choice, int ID) throws IOException {
         String[] returned = new String[1];
         boolean match = false;
         int index = 0;
         if (choice == 1){
-            for(int i = 0; i < this.arrTrans.length;i++){
-                if (Integer.parseInt(this.arrTrans[i].split(",")[0]) == ID){
+            for(int i = 0; i < transArray.length;i++){
+                if (Integer.parseInt(transArray[i].split(",")[0]) == ID){
                     match = true;
-                    index = Integer.parseInt(this.arrTrans[i].split(",")[1]);
-                    this.arrTrans[i].split(",")[4] = String.valueOf(LocalDate.now());
-                    this.arrTrans[i].split(",")[5] = "Returned";
+                    index = Integer.parseInt(transArray[i].split(",")[1]);
+                    String[] transParts = transArray[i].split(",");
+                    transParts[4] = String.valueOf(LocalDate.now());
+                    transParts[5] = "Returned";
+                    transArray[i] = String.join(",", transParts);
                 }
             }
             if(!match){
@@ -93,11 +97,13 @@ public class Transaction {
                 return returned;
             }
             else {
-                this.writeData(this.arrTrans);
+                this.writeData(transArray);
                 for(int i = 0; i < booksArray.length;i++){
                     if (Integer.parseInt(booksArray[i].split(",")[0]) == index) {
-                        if (!Boolean.parseBoolean(booksArray[i].split(",")[4])) {
-                            booksArray[i].split(",")[4] = "true";
+                        String[] bookParts = booksArray[i].split(",");
+                        if (!Boolean.parseBoolean(bookParts[4])) {
+                            bookParts[4] = "true"; // Update availability
+                            booksArray[i] = String.join(",", bookParts);
                             return booksArray;
                         }
                     }
@@ -107,17 +113,21 @@ public class Transaction {
         else {
             for (int i = 0; i < booksArray.length; i++) {
                 if (Integer.parseInt(booksArray[i].split(",")[0]) == ID) {
-                    index = Integer.parseInt(this.arrTrans[i].split(",")[0]);
+                    index = Integer.parseInt(transArray[i].split(",")[0]);
                     match = true;
                     if (!Boolean.parseBoolean(booksArray[i].split(",")[4])) {
-                        booksArray[i].split(",")[4] = "true";
-                        for (int j = 0; j < this.arrTrans.length; j++) {
-                            if (Integer.parseInt(this.arrTrans[i].split(",")[0]) == index) {
-                                this.arrTrans[j].split(",")[4] = String.valueOf(LocalDate.now());
-                                this.arrTrans[j].split(",")[5] = "Returned";
+                        String[] bookParts = booksArray[i].split(",");
+                        bookParts[4] = "true"; // Update availability
+                        booksArray[i] = String.join(",", bookParts);
+                        for (int j = 0; j < transArray.length; j++) {
+                            if (Integer.parseInt(transArray[i].split(",")[0]) == index) {
+                                String[] transParts = transArray[i].split(",");
+                                transParts[4] = String.valueOf(LocalDate.now());
+                                transParts[5] = "Returned";
+                                transArray[i] = String.join(",", transParts);
                             }
                         }
-                        this.writeData(this.arrTrans);
+                        this.writeData(transArray);
                         return booksArray;
                     }
                 }

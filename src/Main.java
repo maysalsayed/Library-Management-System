@@ -250,7 +250,12 @@ public class Main{
                 } else if (transOperations.arrTrans.length == 0) {
                     System.out.println("The Book isn't Borrowed!");
                 } else {
-                    transOperations.returningBook(returnedBooks, choice, ID);
+                    String [] returned = transOperations.returningBook(returnedBooks,transOperations.arrTrans, choice, ID);
+                    if (returned.length == 1){
+                        System.out.println(returned[0]);
+                    }
+                    else
+                        bookOperations.writeData(returned);
                 }
             }
             else {
