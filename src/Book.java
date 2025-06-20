@@ -164,4 +164,14 @@ public class Book {
             System.out.println(s);
         }
     }
+
+    public List<String> searchForBook(int choice,String SearchingData){
+        List <String> ArrayofBooks = new ArrayList<>();
+        for (int i = 0;i<this.arrBooks.length;i++){
+            if (this.arrBooks[i].split(",")[choice].equalsIgnoreCase(SearchingData)){
+                ArrayofBooks.add(this.arrBooks[i]);
+            }
+        }
+        return ArrayofBooks;
+    }
 }

@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,10 +85,41 @@ public class Main{
             bookOperations.listBooks();
         }
         else if (userAnswer == 5){
+            String Search_Data;
+            while (true) {
+                System.out.println("""
+                        What do you want to use to search for the book?
+                        Please write the number of the choice:
+                        1. Book Title
+                        2. Book Author
+                        3. Book ISBN
+                        """);
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                if (bookOperations.arrBooks.length == 0){
+                    System.out.println("No Books to be Searched for!");
+                    break;
+                }
+                if (choice == 1 || choice == 2 || choice ==3){
+                    System.out.println("Please enter the data to search for: ");
+                    Search_Data = scanner.nextLine();
+                    List<String> Returned_Array = bookOperations.searchForBook(choice, Search_Data);
+                    if (Returned_Array.isEmpty()) {
+                        System.out.println("No Book with this Data.");
+                        break;
+                    }
+                    else {
+                        System.out.println(Returned_Array);
+                        break;
+                    }
+                }
+                else
+                    System.out.println("Please enter a valid choice");
+            }
 
         }
         else if (userAnswer == 6){
-
+            //return to main menu
         }
         else {
             System.out.println("Please enter a valid number.");
