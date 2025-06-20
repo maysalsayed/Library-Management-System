@@ -251,9 +251,8 @@ public class Main{
                     System.out.println("The Book isn't Borrowed!");
                 } else {
                     String [] returned = transOperations.returningBook(returnedBooks,transOperations.arrTrans, choice, ID);
-                    if (returned.length == 1){
+                    if (returned.length == 1)
                         System.out.println(returned[0]);
-                    }
                     else
                         bookOperations.writeData(returned);
                 }
