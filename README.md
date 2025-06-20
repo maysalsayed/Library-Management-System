@@ -3,23 +3,23 @@ A console-based Java application designed to manage a small library's operations
 ✨ Features\
 -Book Management
 
-**Add, remove, update, and search books
+- Add, remove, update, and search books
 
-**Validate ISBN format (ISBN-13 standard)
+- Validate ISBN format (ISBN-13 standard)
 
 -Member Management
 
-**Add, remove, update, and list members
+- Add, remove, update, and list members
 
-**Validate email and phone format
+- Validate email and phone format
 
 -Borrow/Return System
 
-**Borrow books by member ID and book ID
+- Borrow books by member ID and book ID
 
-**Return books using either transaction ID or book ID
+- Return books using either transaction ID or book ID
 
-**Track and list all transactions
+- Track and list all transactions
 
 🧱 Project Structure\
 The main class is Main.java, which handles the user interface and interacts with the following assumed classes:
