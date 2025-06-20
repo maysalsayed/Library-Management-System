@@ -263,7 +263,7 @@ public class Main{
             }
 
         } else if (userAnswer == 3) {
-
+            transOperations.listTran();
         }
         else if(userAnswer == 4){
             //return to main menu

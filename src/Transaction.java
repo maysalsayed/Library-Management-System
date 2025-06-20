@@ -10,7 +10,7 @@ public class Transaction {
     private String BorrowDate;
     private String ReturnDate;
     private String Status;
-    private String TransFileName = "Transactions.txt";
+    private final String TransFileName = "Transactions.txt";
     String[] arrTrans;
 
     public Transaction() throws IOException {
@@ -36,6 +36,7 @@ public class Transaction {
             System.out.println(e.getMessage());
         }
     }
+
     public void writeData(String[] arr) throws IOException {
         FileWriter file = new FileWriter(TransFileName);
         BufferedWriter writer = new BufferedWriter(file);
@@ -44,23 +45,24 @@ public class Transaction {
         }
         writer.close();
     }
+
     public String[] borrowingBook(String[] membersArray, String[] booksArray, int memberID, int bookID) throws IOException {
         String[] returned = new String[1];
-        String [] Transactions = new String[this.arrTrans.length+1];
+        String[] Transactions = new String[this.arrTrans.length + 1];
         for (int i = 0; i < booksArray.length; i++) {
             if (Integer.parseInt(booksArray[i].split(",")[0]) == bookID) {
                 String[] bookParts = booksArray[i].split(",");
                 if (Boolean.parseBoolean(bookParts[4])) {
                     bookParts[4] = "false"; // Update availability
                     booksArray[i] = String.join(",", bookParts);
-                    for (int j = 0;j < Transactions.length;j++){
+                    for (int j = 0; j < Transactions.length; j++) {
                         if (j != Transactions.length - 1)
                             Transactions[j] = this.arrTrans[j];
-                        else{
-                            if(Transactions.length == 1)
+                        else {
+                            if (Transactions.length == 1)
                                 Transactions[j] = "1" + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
                             else
-                                Transactions[j] = Integer.parseInt(this.arrTrans[this.arrTrans.length -1].split(",")[0])+1 + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
+                                Transactions[j] = Integer.parseInt(this.arrTrans[this.arrTrans.length - 1].split(",")[0]) + 1 + "," + bookID + "," + memberID + "," + String.valueOf(LocalDate.now()) + ",,Borrowed";
                         }
 
                     }
@@ -77,13 +79,13 @@ public class Transaction {
         return returned;
     }
 
-    public String [] returningBook(String [] booksArray,String [] transArray,int choice, int ID) throws IOException {
+    public String[] returningBook(String[] booksArray, String[] transArray, int choice, int ID) throws IOException {
         String[] returned = new String[1];
         boolean match = false;
         int index = 0;
-        if (choice == 1){
-            for(int i = 0; i < transArray.length;i++){
-                if (Integer.parseInt(transArray[i].split(",")[0]) == ID){
+        if (choice == 1) {
+            for (int i = 0; i < transArray.length; i++) {
+                if (Integer.parseInt(transArray[i].split(",")[0]) == ID) {
                     match = true;
                     index = Integer.parseInt(transArray[i].split(",")[1]);
                     String[] transParts = transArray[i].split(",");
@@ -92,13 +94,12 @@ public class Transaction {
                     transArray[i] = String.join(",", transParts);
                 }
             }
-            if(!match){
+            if (!match) {
                 returned[0] = "The Transaction doesn't exist! You should use valid Trans ID.";
                 return returned;
-            }
-            else {
+            } else {
                 this.writeData(transArray);
-                for(int i = 0; i < booksArray.length;i++){
+                for (int i = 0; i < booksArray.length; i++) {
                     if (Integer.parseInt(booksArray[i].split(",")[0]) == index) {
                         String[] bookParts = booksArray[i].split(",");
                         if (!Boolean.parseBoolean(bookParts[4])) {
@@ -109,32 +110,34 @@ public class Transaction {
                     }
                 }
             }
-        }
-        else {
-            for (int i = 0; i < booksArray.length; i++) {
-                if (Integer.parseInt(booksArray[i].split(",")[0]) == ID) {
-                    index = Integer.parseInt(transArray[i].split(",")[0]);
+        } else {
+            for (int i = 0; i < transArray.length; i++) {
+                if (Integer.parseInt(transArray[i].split(",")[1]) == ID) {
                     match = true;
-                    if (!Boolean.parseBoolean(booksArray[i].split(",")[4])) {
-                        String[] bookParts = booksArray[i].split(",");
-                        bookParts[4] = "true"; // Update availability
-                        booksArray[i] = String.join(",", bookParts);
-                        for (int j = 0; j < transArray.length; j++) {
-                            if (Integer.parseInt(transArray[i].split(",")[0]) == index) {
-                                String[] transParts = transArray[i].split(",");
-                                transParts[4] = String.valueOf(LocalDate.now());
-                                transParts[5] = "Returned";
-                                transArray[i] = String.join(",", transParts);
-                            }
+                    for (int j = 0; j < booksArray.length; j++) {
+                        if (!Boolean.parseBoolean(booksArray[j].split(",")[4]) && Integer.parseInt(booksArray[j].split(",")[0]) == ID) {
+                            String[] bookParts = booksArray[j].split(",");
+                            bookParts[4] = "true"; // Update availability
+                            booksArray[j] = String.join(",", bookParts);
+                            String[] transParts = transArray[i].split(",");
+                            transParts[4] = String.valueOf(LocalDate.now());
+                            transParts[5] = "Returned";
+                            transArray[i] = String.join(",", transParts);
                         }
-                        this.writeData(transArray);
-                        return booksArray;
+
                     }
+                    this.writeData(transArray);
+                    return booksArray;
                 }
             }
         }
         returned[0] = "The Transaction doesn't Exist! You should use valid Book ID";
         return returned;
     }
-
+    public void listTran(){
+        System.out.println("Here's the list of all Trans: ");
+        for (String s:this.arrTrans){
+            System.out.println(s);
+        }
+    }
 }
