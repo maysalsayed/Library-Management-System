@@ -202,7 +202,8 @@ public class Main{
         Choose the number of the choice:
         1. Borrow a Book
         2. Return a Book
-        3. Back to Main Menu
+        3. List all Transactions
+        4. Back to Main Menu
         """);
         int userAnswer = scanner.nextInt();
         scanner.nextLine();
@@ -227,14 +228,40 @@ public class Main{
                 }
                 else {
                     bookOperations.writeData(returnedTrans);
+                    System.out.println("The Transaction added Successfully!");
                 }
             }
         }
         else if(userAnswer == 2){
+            System.out.println("""
+            To Return a Book,Enter Transaction ID or Book ID, choose what to enter: 
+            1. Transaction ID
+            2. Book ID
+            3. Return to Main menu
+            """);
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            if (choice == 1 || choice == 2){
+                System.out.println("Enter the value: ");
+                int ID = scanner.nextInt();
+                scanner.nextLine();
+                if (bookOperations.arrBooks.length == 0){
+                    System.out.println("No Books exist.");
+                } else if (transOperations.arrTrans.length == 0) {
+                    System.out.println("The Book isn't Borrowed!");
+                } else {
+                    transOperations.returningBook(returnedBooks, choice, ID);
+                }
+            }
+            else {
+                //return to main menu
+            }
 
         } else if (userAnswer == 3) {
-            //return to main menu
 
+        }
+        else if(userAnswer == 4){
+            //return to main menu
         }
     }
 

@@ -75,4 +75,56 @@ public class Transaction {
         return returned;
     }
 
+    public String [] returningBook(String [] booksArray,int choice, int ID) throws IOException {
+        String[] returned = new String[1];
+        boolean match = false;
+        int index = 0;
+        if (choice == 1){
+            for(int i = 0; i < this.arrTrans.length;i++){
+                if (Integer.parseInt(this.arrTrans[i].split(",")[0]) == ID){
+                    match = true;
+                    index = Integer.parseInt(this.arrTrans[i].split(",")[1]);
+                    this.arrTrans[i].split(",")[4] = String.valueOf(LocalDate.now());
+                    this.arrTrans[i].split(",")[5] = "Returned";
+                }
+            }
+            if(!match){
+                returned[0] = "The Transaction doesn't exist! You should use valid Trans ID.";
+                return returned;
+            }
+            else {
+                this.writeData(this.arrTrans);
+                for(int i = 0; i < booksArray.length;i++){
+                    if (Integer.parseInt(booksArray[i].split(",")[0]) == index) {
+                        if (!Boolean.parseBoolean(booksArray[i].split(",")[4])) {
+                            booksArray[i].split(",")[4] = "true";
+                            return booksArray;
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < booksArray.length; i++) {
+                if (Integer.parseInt(booksArray[i].split(",")[0]) == ID) {
+                    index = Integer.parseInt(this.arrTrans[i].split(",")[0]);
+                    match = true;
+                    if (!Boolean.parseBoolean(booksArray[i].split(",")[4])) {
+                        booksArray[i].split(",")[4] = "true";
+                        for (int j = 0; j < this.arrTrans.length; j++) {
+                            if (Integer.parseInt(this.arrTrans[i].split(",")[0]) == index) {
+                                this.arrTrans[j].split(",")[4] = String.valueOf(LocalDate.now());
+                                this.arrTrans[j].split(",")[5] = "Returned";
+                            }
+                        }
+                        this.writeData(this.arrTrans);
+                        return booksArray;
+                    }
+                }
+            }
+        }
+        returned[0] = "The Transaction doesn't Exist! You should use valid Book ID";
+        return returned;
+    }
+
 }
